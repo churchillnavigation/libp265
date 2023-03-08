@@ -1,0 +1,13 @@
+prefix=@prefix@
+exec_prefix=@exec_prefix@
+libdir=@libdir@
+includedir=@includedir@
+
+Name: libp265
+Description: H.265/HEVC video decoder.
+URL: https://github.com/jswillard/libp265
+Version: @VERSION@
+Requires: 
+Libs: -lp265 -L${libdir}
+Libs.private: @LIBS@ -lstdc++
+Cflags: -I${includedir}
