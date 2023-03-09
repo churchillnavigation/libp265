@@ -18,13 +18,13 @@ set(SRCS
 
 add_definitions(-DLIBP265_EXPORTS)
 
-add_library(p265 ${SRCS})
-target_link_libraries(p265 PRIVATE Threads::Threads)
-target_include_directories(p265 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
+add_library(libp265 ${SRCS})
+target_link_libraries(libp265 PRIVATE Threads::Threads)
+target_include_directories(libp265 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
 
 write_basic_package_version_file(libp265ConfigVersion.cmake COMPATIBILITY ExactVersion)
 
-install(TARGETS p265 EXPORT libp265Config
+install(TARGETS libp265 EXPORT libp265Config
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
