@@ -18,16 +18,9 @@ set(SRCS
 
 add_definitions(-DLIBP265_EXPORTS)
 
-add_library(p265 SHARED ${SRCS})
+add_library(p265 ${SRCS})
 target_link_libraries(p265 PRIVATE Threads::Threads)
 target_include_directories(p265 PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/../include)
-
-if (CMAKE_SYSTEM_NAME MATCHES "Darwin|iOS")
-    set_target_properties( p265 PROPERTIES
-        FRAMEWORK TRUE
-        MACOSX_FRAMEWORK_IDENTIFIER com.jswillard.libp265
-    )
-endif()
 
 write_basic_package_version_file(libp265ConfigVersion.cmake COMPATIBILITY ExactVersion)
 
@@ -35,7 +28,6 @@ install(TARGETS p265 EXPORT libp265Config
     RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR}
     LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
     ARCHIVE DESTINATION ${CMAKE_INSTALL_LIBDIR}
-    FRAMEWORK DESTINATION Frameworks
 )
 
 install(EXPORT libp265Config DESTINATION "${CMAKE_INSTALL_LIBDIR}/cmake/libp265")

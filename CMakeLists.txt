@@ -32,7 +32,7 @@ endif()
 
 option(BUILD_SHARED_LIBS "Build shared library" ON)
 if(NOT BUILD_SHARED_LIBS)
-  add_definitions(-DLIBDE265_STATIC_BUILD)
+  add_definitions(-DLIBP265_STATIC_BUILD)
 endif()
 
 add_subdirectory(src)
