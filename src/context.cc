@@ -20,6 +20,8 @@
 
 #include "libp265/context.h"
 
+#include <cstring>
+
 BEGIN_NAMESPACE_LIBP265
 
 void error_queue::add_warning(P265_error warning, bool once)
