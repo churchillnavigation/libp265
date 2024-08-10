@@ -42,10 +42,10 @@ class pps_range_extension
  public:
   pps_range_extension() { reset(); }
 
-  void reset();
+  LIBP265_API void reset();
 
-  bool read(bitreader*, parse_context*, const pic_parameter_set*);
-  void dump(int fd) const;
+  LIBP265_API bool read(bitreader*, parse_context*, const pic_parameter_set*);
+  LIBP265_API void dump(int fd) const;
 
   uint8_t log2_max_transform_skip_block_size;
   bool    cross_component_prediction_enabled_flag;
@@ -61,19 +61,19 @@ class pps_range_extension
 
 class pic_parameter_set {
 public:
-  pic_parameter_set();
-  ~pic_parameter_set();
+  LIBP265_API pic_parameter_set();
+  LIBP265_API ~pic_parameter_set();
 
   void reset() { set_defaults(); }
-  bool read(bitreader*, parse_context*);
+  LIBP265_API bool read(bitreader*, parse_context*);
   // bool write(error_queue*, CABAC_encoder&,
   //            const seq_parameter_set* sps);
 
-  bool is_tile_start_CTB(int ctbX,int ctbY) const;
-  void dump(int fd) const;
+  LIBP265_API bool is_tile_start_CTB(int ctbX,int ctbY) const;
+  LIBP265_API void dump(int fd) const;
 
 
-  void set_defaults(enum PresetSet = Preset_Default);
+  LIBP265_API void set_defaults(enum PresetSet = Preset_Default);
 
   bool pps_read; // whether this pps has been read from bitstream
   std::shared_ptr<const seq_parameter_set> sps;
@@ -160,7 +160,7 @@ public:
   std::vector<int> TileIdRS;      // #CTBs  // index in raster-scan order
   std::vector<int> MinTbAddrZS;   // #TBs   [x + y*PicWidthInTbsY]
 
-  void set_derived_values(const seq_parameter_set* sps);
+  LIBP265_API void set_derived_values(const seq_parameter_set* sps);
 };
 
 END_NAMESPACE_LIBP265

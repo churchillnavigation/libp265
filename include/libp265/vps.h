@@ -51,11 +51,11 @@ enum profile_idc {
 
 class profile_data {
 public:
-  void read(bitreader* reader);
-  // void write(CABAC_encoder& writer) const;
-  void dump(bool general, FILE* fh) const;
+  LIBP265_API void read(bitreader* reader);
+  // LIBP265_API void write(CABAC_encoder& writer) const;
+  LIBP265_API void dump(bool general, FILE* fh) const;
 
-  void set_defaults(enum profile_idc, int level_major, int level_minor);
+  LIBP265_API void set_defaults(enum profile_idc, int level_major, int level_minor);
 
   // --- profile ---
 
@@ -83,9 +83,9 @@ public:
 class profile_tier_level
 {
 public:
-  void read(bitreader* reader, int max_sub_layers);
+  LIBP265_API void read(bitreader* reader, int max_sub_layers);
   // void write(CABAC_encoder& writer, int max_sub_layers) const;
-  void dump(int max_sub_layers, FILE* fh) const;
+  LIBP265_API void dump(int max_sub_layers, FILE* fh) const;
 
   profile_data general;
 
@@ -130,11 +130,11 @@ typedef struct {
 class video_parameter_set
 {
 public:
-  P265_error read(error_queue* errqueue, bitreader* reader);
-  // P265_error write(error_queue* errqueue, CABAC_encoder& out) const;
-  void dump(int fd) const;
+  LIBP265_API P265_error read(error_queue* errqueue, bitreader* reader);
+  //LIBP265_API  P265_error write(error_queue* errqueue, CABAC_encoder& out) const;
+  LIBP265_API void dump(int fd) const;
 
-  void set_defaults(enum profile_idc profile, int level_major, int level_minor);
+  LIBP265_API void set_defaults(enum profile_idc profile, int level_major, int level_minor);
 
   int video_parameter_set_id;
   int vps_max_layers;            // [1;?]  currently always 1

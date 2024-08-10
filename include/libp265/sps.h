@@ -86,18 +86,18 @@ class sps_range_extension
 
 class seq_parameter_set {
 public:
-  seq_parameter_set();
-  ~seq_parameter_set();
+  LIBP265_API seq_parameter_set();
+  LIBP265_API ~seq_parameter_set();
 
-  P265_error read(error_queue*, bitreader*);
-  // P265_error write(error_queue*, CABAC_encoder&);
+  LIBP265_API P265_error read(error_queue*, bitreader*);
+  // LIBP265_API P265_error write(error_queue*, CABAC_encoder&);
 
-  void dump(int fd) const;
+  LIBP265_API void dump(int fd) const;
 
-  void set_defaults(enum PresetSet = Preset_Default);
-  void set_CB_log2size_range(int mini,int maxi);
-  void set_TB_log2size_range(int mini,int maxi);
-  void set_resolution(int w,int h);
+  LIBP265_API void set_defaults(enum PresetSet = Preset_Default);
+  LIBP265_API void set_CB_log2size_range(int mini,int maxi);
+  LIBP265_API void set_TB_log2size_range(int mini,int maxi);
+  LIBP265_API void set_resolution(int w,int h);
 
   bool sps_read; // whether the sps has been read from the bitstream
 
@@ -188,7 +188,7 @@ public:
 
   // --- derived values ---
 
-  P265_error compute_derived_values(bool sanitize_values = false);
+  LIBP265_API P265_error compute_derived_values(bool sanitize_values = false);
 
   int BitDepth_Y;
   int QpBdOffset_Y;
@@ -250,10 +250,10 @@ public:
   int get_chroma_shift_H(int cIdx) const { return cIdx ? SubHeightC-1 : 0; }
 };
 
-P265_error read_scaling_list(bitreader*, const seq_parameter_set*, scaling_list_data*, bool inPPS);
-// P265_error write_scaling_list(CABAC_encoder& out, const seq_parameter_set* sps,
+LIBP265_API P265_error read_scaling_list(bitreader*, const seq_parameter_set*, scaling_list_data*, bool inPPS);
+// LIBP265_API P265_error write_scaling_list(CABAC_encoder& out, const seq_parameter_set* sps,
 //                                scaling_list_data* sclist, bool inPPS);
-void set_default_scaling_lists(scaling_list_data*);
+LIBP265_API void set_default_scaling_lists(scaling_list_data*);
 
 END_NAMESPACE_LIBP265
 

@@ -39,10 +39,10 @@ BEGIN_NAMESPACE_LIBP265
 class error_queue
 {
  public:
-    error_queue();
+    LIBP265_API error_queue();
 
-    void add_warning(P265_error warning, bool once);
-    P265_error get_warning();
+    LIBP265_API void add_warning(P265_error warning, bool once);
+    LIBP265_API P265_error get_warning();
 
  private:
     P265_error warnings[MAX_WARNINGS];

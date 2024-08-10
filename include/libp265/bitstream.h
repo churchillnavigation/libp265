@@ -48,21 +48,21 @@ typedef struct {
   int nextbits_cnt;
 } bitreader;
 
-void bitreader_init(bitreader*, unsigned char* buffer, int len);
-void bitreader_refill(bitreader*); // refill to at least 56+1 bits
-int  next_bit(bitreader*);
-int  next_bit_norefill(bitreader*);
-int  get_bits(bitreader*, int n);
-int  get_bits_fast(bitreader*, int n);
-int  peek_bits(bitreader*, int n);
-void skip_bits(bitreader*, int n);
-void skip_bits_fast(bitreader*, int n);
-void skip_to_byte_boundary(bitreader*);
-void prepare_for_CABAC(bitreader*);
-int  get_uvlc(bitreader*);  // may return UVLC_ERROR
-int  get_svlc(bitreader*);  // may return UVLC_ERROR
+LIBP265_API void bitreader_init(bitreader*, unsigned char* buffer, int len);
+LIBP265_API void bitreader_refill(bitreader*); // refill to at least 56+1 bits
+LIBP265_API int  next_bit(bitreader*);
+LIBP265_API int  next_bit_norefill(bitreader*);
+LIBP265_API int  get_bits(bitreader*, int n);
+LIBP265_API int  get_bits_fast(bitreader*, int n);
+LIBP265_API int  peek_bits(bitreader*, int n);
+LIBP265_API void skip_bits(bitreader*, int n);
+LIBP265_API void skip_bits_fast(bitreader*, int n);
+LIBP265_API void skip_to_byte_boundary(bitreader*);
+LIBP265_API void prepare_for_CABAC(bitreader*);
+LIBP265_API int  get_uvlc(bitreader*);  // may return UVLC_ERROR
+LIBP265_API int  get_svlc(bitreader*);  // may return UVLC_ERROR
 
-bool check_rbsp_trailing_bits(bitreader*); // return true if remaining filler bits are all zero
+LIBP265_API bool check_rbsp_trailing_bits(bitreader*); // return true if remaining filler bits are all zero
 
 END_NAMESPACE_LIBP265
 

@@ -47,19 +47,19 @@ class ref_pic_set
 
   // --- derived values ---
 
-  void compute_derived_values();
+  LIBP265_API void compute_derived_values();
 
   uint8_t NumDeltaPocs;     // total number of reference pictures (past + future)
 
   uint8_t NumPocTotalCurr_shortterm_only; /* Total number of reference pictures that may actually
                                              be used for prediction in the current frame. */
 
-  void reset();
+  LIBP265_API void reset();
 };
 
 
-void dump_short_term_ref_pic_set(const ref_pic_set*, FILE* fh);
-void dump_compact_short_term_ref_pic_set(const ref_pic_set* set, int range, FILE* fh);
+LIBP265_API void dump_short_term_ref_pic_set(const ref_pic_set*, FILE* fh);
+LIBP265_API void dump_compact_short_term_ref_pic_set(const ref_pic_set* set, int range, FILE* fh);
 
 END_NAMESPACE_LIBP265
 

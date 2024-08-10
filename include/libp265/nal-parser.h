@@ -39,8 +39,8 @@ typedef int64_t P265_PTS;
 
 class NAL_unit {
  public:
-  NAL_unit();
-  ~NAL_unit();
+  LIBP265_API NAL_unit();
+  LIBP265_API ~NAL_unit();
 
   nal_header header;
 
@@ -48,13 +48,13 @@ class NAL_unit {
   std::shared_ptr<void> user_data;
 
 
-  void clear();
+  LIBP265_API void clear();
 
   // --- rbsp data ---
 
-  LIBP265_CHECK_RESULT bool resize(int new_size);
-  LIBP265_CHECK_RESULT bool append(const unsigned char* data, int n);
-  LIBP265_CHECK_RESULT bool set_data(const unsigned char* data, int n);
+  LIBP265_API LIBP265_CHECK_RESULT bool resize(int new_size);
+  LIBP265_API LIBP265_CHECK_RESULT bool append(const unsigned char* data, int n);
+  LIBP265_API LIBP265_CHECK_RESULT bool set_data(const unsigned char* data, int n);
 
   size_t size() const { return data_size; }
   void set_size(size_t s) { data_size=s; }
@@ -64,7 +64,7 @@ class NAL_unit {
 
   // --- skipped stuffing bytes ---
 
-  int num_skipped_bytes_before(int byte_position, int headerLength) const;
+  LIBP265_API int num_skipped_bytes_before(int byte_position, int headerLength) const;
   int  num_skipped_bytes() const { return static_cast<int>(skipped_bytes.size()); }
 
   //void clear_skipped_bytes() { skipped_bytes.clear(); }
@@ -72,14 +72,14 @@ class NAL_unit {
   /* Mark a byte as skipped. It is assumed that the byte is already removed
      from the input data. The NAL data is not modified.
   */
-  void insert_skipped_byte(int pos);
+  LIBP265_API void insert_skipped_byte(int pos);
 
   /* Remove all stuffing bytes from NAL data. The NAL data is modified and
      the removed bytes are marked as skipped bytes.
    */
-  void remove_stuffing_bytes();
+  LIBP265_API void remove_stuffing_bytes();
 
-  void insert_emulation_prevention_bytes();
+  LIBP265_API void insert_emulation_prevention_bytes();
 
  private:
   unsigned char* nal_data;
@@ -93,20 +93,20 @@ class NAL_unit {
 class NAL_Parser
 {
  public:
-  NAL_Parser();
-  ~NAL_Parser();
+  LIBP265_API NAL_Parser();
+  LIBP265_API ~NAL_Parser();
 
-  P265_error push_data(const unsigned char* data, int len,
+  LIBP265_API P265_error push_data(const unsigned char* data, int len,
                         P265_PTS pts, std::shared_ptr<void> user_data = NULL);
 
-  P265_error push_NAL(const unsigned char* data, int len,
+  LIBP265_API P265_error push_NAL(const unsigned char* data, int len,
                        P265_PTS pts, std::shared_ptr<void> user_data = NULL);
 
-  NAL_unit*   pop_from_NAL_queue();
-  P265_error flush_data();
+  LIBP265_API NAL_unit*   pop_from_NAL_queue();
+  LIBP265_API P265_error flush_data();
   void        mark_end_of_stream() { end_of_stream=true; }
   void        mark_end_of_frame() { end_of_frame=true; }
-  void  remove_pending_input_data();
+  LIBP265_API void  remove_pending_input_data();
 
   int bytes_in_input_queue() const {
     int size = nBytes_in_NAL_queue;
@@ -124,7 +124,7 @@ class NAL_Parser
     return static_cast<int>(NAL_queue.size());
   }
 
-  void free_NAL_unit(NAL_unit*);
+  LIBP265_API void free_NAL_unit(NAL_unit*);
 
 
   int get_NAL_queue_length() const { return static_cast<int>(NAL_queue.size()); }

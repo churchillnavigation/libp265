@@ -43,8 +43,8 @@ struct nal_header {
     nuh_temporal_id = 0;
   }
 
-  void read(bitreader* reader);
-  // void write(CABAC_encoder& writer) const;
+  LIBP265_API void read(bitreader* reader);
+  // LIBP265_API void write(CABAC_encoder& writer) const;
 
   void set(int unit_type, int layer_id=0, int temporal_id=0) {
     nal_unit_type  =unit_type;
@@ -108,17 +108,17 @@ struct nal_header {
 
 #define NAL_UNIT_UNDEFINED    255
 
-bool isIDR(uint8_t unit_type);
-bool isBLA(uint8_t unit_type);
-bool isCRA(uint8_t unit_type);
-bool isRAP(uint8_t unit_type);
-bool isRASL(uint8_t unit_type);
-bool isIRAP(uint8_t unit_type);
-bool isRADL(uint8_t unit_type);
-bool isReferenceNALU(uint8_t unit_type);
-bool isSublayerNonReference(uint8_t unit_type);
+LIBP265_API bool isIDR(uint8_t unit_type);
+LIBP265_API bool isBLA(uint8_t unit_type);
+LIBP265_API bool isCRA(uint8_t unit_type);
+LIBP265_API bool isRAP(uint8_t unit_type);
+LIBP265_API bool isRASL(uint8_t unit_type);
+LIBP265_API bool isIRAP(uint8_t unit_type);
+LIBP265_API bool isRADL(uint8_t unit_type);
+LIBP265_API bool isReferenceNALU(uint8_t unit_type);
+LIBP265_API bool isSublayerNonReference(uint8_t unit_type);
 
-const char* get_NAL_name(uint8_t unit_type);
+LIBP265_API const char* get_NAL_name(uint8_t unit_type);
 
 inline bool isIdrPic(uint8_t nal_unit_type) {
   return (nal_unit_type == NAL_UNIT_IDR_W_RADL ||

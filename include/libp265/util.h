@@ -150,7 +150,7 @@ LIBP265_INLINE static int Log2SizeToArea(int v)
   return (1<<(v<<1));
 }
 
-void copy_subimage(uint8_t* dst,int dststride,
+LIBP265_API void copy_subimage(uint8_t* dst,int dststride,
                    const uint8_t* src,int srcstride,
                    int w, int h);
 
@@ -218,15 +218,15 @@ void logtrace(enum LogModule module, const char* string, ...);
 #define logtrace(a,b, ...) { }
 #endif
 
-void log2fh(FILE* fh, const char* string, ...);
+LIBP265_API void log2fh(FILE* fh, const char* string, ...);
 
 
-void printBlk(const char* title,const int32_t* data, int blksize, int stride, const std::string& prefix="  ");
-void printBlk(const char* title,const int16_t* data, int blksize, int stride, const std::string& prefix="  ");
-void printBlk(const char* title,const uint8_t* data, int blksize, int stride, const std::string& prefix="  ");
+LIBP265_API void printBlk(const char* title,const int32_t* data, int blksize, int stride, const std::string& prefix="  ");
+LIBP265_API void printBlk(const char* title,const int16_t* data, int blksize, int stride, const std::string& prefix="  ");
+LIBP265_API void printBlk(const char* title,const uint8_t* data, int blksize, int stride, const std::string& prefix="  ");
 
-void debug_set_image_output(void (*)(const struct P265_image*, int slot));
-void debug_show_image(const struct P265_image*, int slot);
+LIBP265_API void debug_set_image_output(void (*)(const struct P265_image*, int slot));
+LIBP265_API void debug_show_image(const struct P265_image*, int slot);
 
 END_NAMESPACE_LIBP265
 

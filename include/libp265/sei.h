@@ -81,11 +81,11 @@ struct sei_message {
 
 class seq_parameter_set;
 
-const char* sei_type_name(enum sei_payload_type type);
+LIBP265_API const char* sei_type_name(enum sei_payload_type type);
 
-P265_error read_sei(bitreader* reader, sei_message*, bool suffix, const seq_parameter_set* sps);
-void dump_sei(const sei_message*, const seq_parameter_set* sps);
-P265_error process_sei(const sei_message*, struct P265_image* img);
+LIBP265_API P265_error read_sei(bitreader* reader, sei_message*, bool suffix, const seq_parameter_set* sps);
+LIBP265_API void dump_sei(const sei_message*, const seq_parameter_set* sps);
+LIBP265_API P265_error process_sei(const sei_message*, struct P265_image* img);
 
 END_NAMESPACE_LIBP265
 

@@ -47,11 +47,11 @@ const char* get_video_format_name(enum VideoFormat);
 class video_usability_information
 {
  public:
-  video_usability_information();
+  LIBP265_API video_usability_information();
   
-  P265_error hrd_parameters(error_queue*, bitreader*, const seq_parameter_set*);
-  P265_error read(error_queue*, bitreader*, const seq_parameter_set*);
-  void dump(int fd) const;
+  LIBP265_API P265_error hrd_parameters(error_queue*, bitreader*, const seq_parameter_set*);
+  LIBP265_API P265_error read(error_queue*, bitreader*, const seq_parameter_set*);
+  LIBP265_API void dump(int fd) const;
 
 
   // --- sample aspect ratio (SAR) ---
