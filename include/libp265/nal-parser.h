@@ -65,7 +65,7 @@ class NAL_unit {
   // --- skipped stuffing bytes ---
 
   int num_skipped_bytes_before(int byte_position, int headerLength) const;
-  int  num_skipped_bytes() const { return skipped_bytes.size(); }
+  int  num_skipped_bytes() const { return static_cast<int>(skipped_bytes.size()); }
 
   //void clear_skipped_bytes() { skipped_bytes.clear(); }
 
@@ -110,24 +110,24 @@ class NAL_Parser
 
   int bytes_in_input_queue() const {
     int size = nBytes_in_NAL_queue;
-    if (pending_input_NAL) { size += pending_input_NAL->size(); }
+    if (pending_input_NAL) { size += static_cast<int>(pending_input_NAL->size()); }
     return size;
   }
 
   int number_of_NAL_units_pending() const {
-    int size = NAL_queue.size();
+    int size = static_cast<int>(NAL_queue.size());
     if (pending_input_NAL) { size++; }
     return size;
   }
 
   int number_of_complete_NAL_units_pending() const {
-    return NAL_queue.size();
+    return static_cast<int>(NAL_queue.size());
   }
 
   void free_NAL_unit(NAL_unit*);
 
 
-  int get_NAL_queue_length() const { return NAL_queue.size(); }
+  int get_NAL_queue_length() const { return static_cast<int>(NAL_queue.size()); }
   bool is_end_of_stream() const { return end_of_stream; }
   bool is_end_of_frame() const { return end_of_frame; }
 
