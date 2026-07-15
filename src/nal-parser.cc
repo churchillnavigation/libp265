@@ -61,8 +61,14 @@ void NAL_unit::clear()
 
 LIBP265_CHECK_RESULT bool NAL_unit::resize(int new_size)
 {
-  if (capacity < new_size) {
-    unsigned char* newbuffer = (unsigned char*)malloc(new_size);
+  if (capacity < (size_t)new_size) {
+    // grow geometrically so that repeated appends stay amortized O(n)
+    size_t new_capacity = capacity + capacity/2;
+    if (new_capacity < (size_t)new_size) {
+      new_capacity = new_size;
+    }
+
+    unsigned char* newbuffer = (unsigned char*)malloc(new_capacity);
     if (newbuffer == NULL) {
       return false;
     }
@@ -73,7 +79,7 @@ LIBP265_CHECK_RESULT bool NAL_unit::resize(int new_size)
     }
 
     nal_data = newbuffer;
-    capacity = new_size;
+    capacity = new_capacity;
   }
   return true;
 }
@@ -266,8 +272,13 @@ P265_error NAL_Parser::push_data(const unsigned char* data, int len,
 {
   end_of_frame = false;
 
+  // Do not pre-allocate NAL buffers for the complete input: one push may contain
+  // many NALs and each would get a full-input-sized buffer. Start small and let
+  // resize() grow the buffer geometrically while the data is copied.
+  const int initial_size = (len+3 < P265_NAL_INITIAL_CAPACITY) ? len+3 : P265_NAL_INITIAL_CAPACITY;
+
   if (pending_input_NAL == NULL) {
-    pending_input_NAL = alloc_NAL_unit(len+3);
+    pending_input_NAL = alloc_NAL_unit(initial_size);
     if (pending_input_NAL == NULL) {
       return P265_ERROR_OUT_OF_MEMORY;
     }
@@ -277,15 +288,20 @@ P265_error NAL_Parser::push_data(const unsigned char* data, int len,
 
   NAL_unit* nal = pending_input_NAL; // shortcut
 
-  // Resize output buffer so that complete input would fit.
-  // We add 3, because in the worst case 3 extra bytes are created for an input byte.
-  if (!nal->resize(nal->size() + len + 3)) {
-    return P265_ERROR_OUT_OF_MEMORY;
-  }
-
   unsigned char* out = nal->data() + nal->size();
 
   for (int i=0;i<len;i++) {
+    // In the worst case, 3 output bytes are produced per input byte. Make sure
+    // they fit, re-anchoring 'out' since resize() may reallocate the buffer.
+    // The size must be kept current so that resize() preserves the bytes
+    // already written.
+    const size_t out_pos = out - nal->data();
+    nal->set_size(out_pos);
+    if (!nal->resize((int)(out_pos + 3))) {
+      return P265_ERROR_OUT_OF_MEMORY;
+    }
+    out = nal->data() + out_pos;
+
     /*
     printf("state=%d input=%02x (%p) (output size: %d)\n",ctx->input_push_state, *data, data,
            out - ctx->nal_data.data);
@@ -353,7 +369,7 @@ P265_error NAL_Parser::push_data(const unsigned char* data, int len,
 
         // initialize new, empty NAL unit
 
-        pending_input_NAL = alloc_NAL_unit(len+3);
+        pending_input_NAL = alloc_NAL_unit(initial_size);
         if (pending_input_NAL == NULL) {
           return P265_ERROR_OUT_OF_MEMORY;
         }
